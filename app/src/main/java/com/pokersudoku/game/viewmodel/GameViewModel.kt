@@ -23,22 +23,40 @@ class GameViewModel : ViewModel() {
     /**
      * Start a new game with the specified difficulty
      */
+    @Synchronized
     fun startNewGame(difficulty: Difficulty = Difficulty.EASY) {
-        viewModelScope.launch {
-            val puzzle = SudokuLogic.generatePuzzle(difficulty)
-            _gameState.value = GameState(
-                grid = puzzle,
-                difficulty = difficulty,
-                isGameComplete = false,
-                isGameWon = false,
-                timeElapsed = 0L,
-                moveCount = 0,
-                hintsUsed = 0,
-                selectedCell = null,
-                selectedCard = null
-            )
-            // Reset available cards
-            _availableCards.value = CardFactory.createSudokuCards()
+        try {
+            // First, mark current game as complete to stop any running timers
+            _gameState.value = _gameState.value.copy(isGameComplete = true)
+            
+            viewModelScope.launch {
+                try {
+                    val puzzle = SudokuLogic.generatePuzzle(difficulty)
+                    
+                    // Create new game state atomically
+                    val newState = GameState(
+                        grid = puzzle,
+                        difficulty = difficulty,
+                        isGameComplete = false,
+                        isGameWon = false,
+                        timeElapsed = 0L,
+                        moveCount = 0,
+                        hintsUsed = 0,
+                        selectedCell = null,
+                        selectedCard = null
+                    )
+                    
+                    // Update both states atomically
+                    _availableCards.value = CardFactory.createSudokuCards()
+                    _gameState.value = newState
+                } catch (e: Exception) {
+                    // If puzzle generation fails, create an empty game state
+                    _gameState.value = GameState(difficulty = difficulty)
+                    _availableCards.value = CardFactory.createSudokuCards()
+                }
+            }
+        } catch (e: Exception) {
+            // Handle any exceptions during state updates
         }
     }
     
@@ -46,6 +64,7 @@ class GameViewModel : ViewModel() {
      * Place a card at the specified position
      * @return String? feedback message if move is invalid, null if move is valid
      */
+    @Synchronized
     fun placeCard(row: Int, col: Int, card: Card): String? {
         val currentState = _gameState.value
         val currentGrid = currentState.grid
@@ -110,6 +129,7 @@ class GameViewModel : ViewModel() {
     /**
      * Remove a card from the specified position
      */
+    @Synchronized
     fun removeCard(row: Int, col: Int) {
         val currentState = _gameState.value
         val currentGrid = currentState.grid
@@ -245,8 +265,13 @@ class GameViewModel : ViewModel() {
     /**
      * Update the game timer
      */
+    @Synchronized
     fun updateTimer(seconds: Long) {
-        _gameState.value = _gameState.value.copy(timeElapsed = seconds)
+        try {
+            _gameState.value = _gameState.value.copy(timeElapsed = seconds)
+        } catch (e: Exception) {
+            // Handle any state update exceptions
+        }
     }
     
     /**

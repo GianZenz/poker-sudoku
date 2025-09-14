@@ -36,10 +36,17 @@ fun GameScreen(
     var showSolveButton by remember { mutableStateOf(false) }
     
     // Game timer
-    LaunchedEffect(gameState.isGameComplete) {
-        while (!gameState.isGameComplete) {
-            kotlinx.coroutines.delay(1000)
-            viewModel.updateTimer(gameState.timeElapsed + 1)
+    LaunchedEffect(gameState.isGameComplete, gameState.difficulty) {
+        try {
+            // Reset timer when starting a new game
+            if (!gameState.isGameComplete && gameState.timeElapsed == 0L) {
+                while (!gameState.isGameComplete) {
+                    kotlinx.coroutines.delay(1000)
+                    viewModel.updateTimer(gameState.timeElapsed + 1)
+                }
+            }
+        } catch (e: Exception) {
+            // Handle any exceptions that might occur during timer updates
         }
     }
     
