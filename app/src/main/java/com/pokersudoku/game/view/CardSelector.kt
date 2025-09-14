@@ -110,7 +110,7 @@ fun SelectableCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val cardColor = if (card.suit == Suit.HEARTS || card.suit == Suit.DIAMONDS) {
+    val cardColor = if (card.suit.isRed) {
         CardRed
     } else {
         CardBlack
@@ -170,7 +170,7 @@ fun HintCard(
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )
                 
-                val cardColor = if (card.suit == Suit.HEARTS || card.suit == Suit.DIAMONDS) {
+                val cardColor = if (card.suit.isRed) {
                     CardRed
                 } else {
                     CardBlack

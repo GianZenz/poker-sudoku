@@ -1,8 +1,5 @@
 package com.pokersudoku.game.model
 
-import androidx.annotation.ColorRes
-import com.pokersudoku.game.R
-
 /**
  * Represents a playing card with suit and rank
  */
@@ -16,12 +13,6 @@ data class Card(
     fun getDisplayText(): String = "${rank.symbol}${suit.symbol}"
     
     /**
-     * Get the color resource for the card
-     */
-    @ColorRes
-    fun getColorResource(): Int = suit.colorResource
-    
-    /**
      * Check if this card is equal to another card (ignoring suit for Sudoku rules)
      * In Poker Sudoku, cards are considered equal if they have the same rank
      */
@@ -33,11 +24,11 @@ data class Card(
 /**
  * Card suits with their symbols and colors
  */
-enum class Suit(val symbol: String, @ColorRes val colorResource: Int) {
-    HEARTS("♥", R.color.card_red),
-    DIAMONDS("♦", R.color.card_red),
-    CLUBS("♣", R.color.card_black),
-    SPADES("♠", R.color.card_black);
+enum class Suit(val symbol: String, val isRed: Boolean) {
+    HEARTS("♥", true),
+    DIAMONDS("♦", true),
+    CLUBS("♣", false),
+    SPADES("♠", false);
     
     companion object {
         val all = values().toList()
