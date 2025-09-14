@@ -1,6 +1,7 @@
 package com.pokersudoku.game.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
@@ -17,7 +18,9 @@ fun AppNavigation(
     var currentScreen by remember { mutableStateOf<AppScreen>(AppScreen.MainMenu) }
     
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding(), // This handles the status bar spacing
         color = MaterialTheme.colorScheme.background
     ) {
         when (currentScreen) {
