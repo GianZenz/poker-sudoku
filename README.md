@@ -1,6 +1,21 @@
 # Poker Sudoku
 
-A unique twist on the classic Sudoku puzzle game that uses playing cards instead of numbers!
+A unique twist on the classic Sudoku puzzle g### Project Structure
+```
+app/src/main/java/com/pokersudoku/game/
+├── model/          # Game models (Card, GameState, etc.)
+├── logic/          # Sudoku game logic and puzzle generation
+├── viewmodel/      # ViewModels for state management
+├── view/           # Compose UI components and screens
+├── navigation/     # Navigation management
+└── ui/theme/       # Material 3 theming and colors
+```uilding the Project
+
+### Prerequisites
+- Android Studio Giraffe or later
+- Android SDK 24+ (Android 7.0 or higher)
+- Kotlin 1.9.0 or later
+- Java Development Kit (JDK) 17ses playing cards instead of numbers!
 
 ## Game Concept
 
@@ -14,7 +29,7 @@ Instead of using numbers 1-9, this Sudoku game uses playing cards with ranks Ace
 
 ### Core Gameplay
 - **9x9 Sudoku grid** with poker card ranks (Ace through 9)
-- **Three difficulty levels**: Easy, Medium, Hard
+- **Four difficulty levels**: Easy, Medium, Hard, and Expert
 - **Real-time conflict detection** - highlights conflicting cards in red
 - **Card selection system** - tap cards to place them on the grid
 - **Hint system** - get suggestions for difficult positions
@@ -94,9 +109,14 @@ app/src/main/java/com/pokersudoku/game/
 
 ### Poker Sudoku Specifics
 - **36 cards total**: One of each rank (Ace-9) in each suit (♠♣♥♦)
-- **Same rank, different suits**: Considered equivalent for Sudoku purposes
 - **Visual distinction**: Red cards (♥♦) and black cards (♠♣) for easy identification
 - **Conflict highlighting**: Conflicting cards are highlighted in red
+
+### Difficulty Levels
+- **Easy**: 35-40 empty cells, suits don't matter
+- **Medium**: 41-46 empty cells, suits don't matter
+- **Hard**: 47-52 empty cells, suits don't matter
+- **Expert**: 30-35 empty cells, but suits DO matter! No duplicate suits allowed in any row, column, or box
 
 ## Future Enhancements
 
