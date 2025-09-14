@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Poker Sudoku</string>
+    <string name="new_game">New Game</string>
+    <string name="check_solution">Check Solution</string>
+    <string name="hint">Hint</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="expert">Expert</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="solution_correct">Solution is correct!</string>
+    <string name="solution_incorrect">Solution has errors. Keep trying!</string>
+    <string name="game_complete">Game Complete!</string>
+    <string name="time">Time: %1$s</string>
+    <string name="moves">Moves: %1$d</string>
+</resources>
